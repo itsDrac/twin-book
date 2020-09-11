@@ -26,7 +26,7 @@ def promanag():
 
 @app.route('/proadd')
 def proadd():
-    return render_template('proadd.html')
+    return render_template('proAdd.html')
 
 @app.route('/vendmanag')
 def vendmanag():
