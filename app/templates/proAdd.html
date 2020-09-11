@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+
+{% block body %}
+			<h1 class="m2 p2">Add Product</h1>
+			<form action="" method="post" class="container">
+				<div class="row m-3">
+					<strong class="col-2">Name :&nbsp;</strong>
+					<input type="text" class="col-8" name="" id="name">
+				</div>
+				<div class="row m-3">
+					<strong class="col-2">Discreption :&nbsp;</strong>
+					<textarea name="" id="dics" class="col-8" ></textarea>
+				</div>
+				<div class="row m-3">
+					<strong class="col-2">Quantity :&nbsp;</strong>
+					<input type="number" class="col-8" name="" id="price">
+				</div>
+				<a class="btn btn-danger col-2" href="ProManage.html">Cancel</a>
+				<input type="submit" value="Add Product" class="btn btn-success col-3">
+			</form>
+{% endblock body%}
