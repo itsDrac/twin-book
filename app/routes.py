@@ -1,20 +1,34 @@
 from flask import render_template, redirect, url_for
-from app import app
-
+from app import app, db
+from app.forms import RegisterForm, LoginForm
+from app.models import *
+from flask_login import login_user, current_user, logout_user
 
 @app.route('/')
 def home():
-    if True :
-        return render_template('dashboard.html')
-    return redirect(url_for('login'))
+    if not current_user.is_authenticated :
+        return redirect(url_for('login'))
+    return render_template('dashboard.html')
 
-@app.route('/login')
+@app.route('/login', methods=['GET', 'POST'])
 def login():
-    return render_template('login.html')
+    form = LoginForm()
+    if form.validate_on_submit():
+        company = Company.query.filter_by(name=form.name.data).first()
+        if company and company.password == form.password.data:
+            login_user(company, remember=False)
+            return redirect(url_for('home'))
+    return render_template('login.html', form=form)
 
-@app.route('/register')
+@app.route('/register', methods=['GET', 'POST'])
 def register():
-    return render_template('register.html')
+    form = RegisterForm()
+    if form.validate_on_submit():
+        c = Company(name = form.name.data, number = form.number.data, email = form.email.data, password = form.password.data)
+        db.session.add(c)
+        db.session.commit()
+        return redirect(url_for('login'))
+    return render_template('register.html', form=form)
 
 @app.route('/inventory')
 def inventory():
@@ -42,4 +56,5 @@ def vendrec():
 
 @app.route('/logout')
 def logout():
+    logout_user()
     return redirect(url_for('login'))

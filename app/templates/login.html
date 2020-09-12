@@ -15,12 +15,21 @@
   <body>
     <div class="screen">
 		<div class="card col-sm-6 col-xl-4">
-			<form action="dashboard.html" method="post">
+			<form action="" method="post">
+                {{ form.hidden_tag() }}
 				<h1>Login</h1>
-				<input type="text" placeholder="Company Name" name="" id="">
-				<input type="password" placeholder="Password" name="" id="">
-				<input type="submit" class="btn btn-info" value="Login">
-				<p>Register for a new company <a href="register.html">here</a></p>
+                {{ form.name(placeholder = "Company Name") }}
+                {% if form.name.errors %}
+                <ul class="errors">
+                    {% for error in form.name.errors %}
+                        <li class="text-danger">{{ error }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+                {{ form.password(placeholder = "Password") }}
+	
+                {{ form.submit(class = "btn btn-info") }}
+                <p>Register for a new company <a href="{{ url_for('register') }}">here</a></p>
 			</form>
 		</div>
 	</div>

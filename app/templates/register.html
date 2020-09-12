@@ -15,14 +15,40 @@
   <body>
     <div class="screen">
 		<div class="card col-sm-6 col-xl-4">
-			<form action="" method="post">
+			<form action="" method="POST">
+                {{ form.hidden_tag() }}
 				<h1>Register</h1>
-				<input type="text" placeholder="Company Name" name="" id="">
-				<input type="number" placeholder="Mobile Number" name="" id="">
-				<input type="email" placeholder="E-Mail" name="" id="">
-				<input type="password" placeholder="Password" name="" id="">
-				<input type="submit" class="btn btn-info" value="Login">
-				<p>Already registered? login <a href="index.html">here</a></p>
+                {{ form.name(placeholder = "Company Name") }}
+                {% if form.name.errors %}
+                <ul class="errors">
+                    {% for error in form.name.errors %}
+                        <li class="text-danger">{{ error }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+                
+                {{ form.number(placeholder = "Mobile Number") }}
+                {% if form.number.errors %}
+                <ul class="errors">
+        	        {% for error in form.number.errors %}
+        		        <li class="text-danger">{{ error }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+                
+                {{ form.email(placeholder = "E-mail") }}
+                {% if form.email.errors %}
+                <ul class="errors">
+        	        {% for error in form.email.errors %}
+        		        <li class="text-danger">{{ error }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+                
+                {{ form.password(placeholder = "Password") }}
+                
+                {{ form.submit(class = "btn btn-info") }}
+                <p>Already registered? login <a href="{{ url_for('login') }}">here</a></p>
 			</form>
 		</div>
 	</div>
