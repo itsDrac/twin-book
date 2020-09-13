@@ -11,3 +11,8 @@ class Company(db.Model, UserMixin):
     number = db.Column(db.Integer(), unique = True)
     email = db.Column(db.String(50), nullable = False)
     password = db.Column(db.String(60), nullable = False)
+
+class Inventory(db.Model):
+    id = db.Column(db.Integer, primary_key = True)
+    name = db.Column(db.String(20), unique = True, nullable = False)
+    company_id = db.Column(db.Integer, db.ForeignKey('company.id'), nullable=False)

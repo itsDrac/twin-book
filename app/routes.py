@@ -1,8 +1,8 @@
 from flask import render_template, redirect, url_for
 from app import app, db
-from app.forms import RegisterForm, LoginForm
-from app.models import Company
-from flask_login import login_user, current_user, logout_user
+from app.forms import RegisterForm, LoginForm, InventoryForm
+from app.models import Company, Inventory
+from flask_login import login_user, current_user, logout_user, login_required
 
 @app.route('/')
 def home():
@@ -30,9 +30,17 @@ def register():
         return redirect(url_for('login'))
     return render_template('register.html', form=form)
 
-@app.route('/inventory')
+@app.route('/inventory', methods=['GET', 'POST'])
+@login_required
 def inventory():
-    return render_template('inventory.html')
+    form = InventoryForm()
+    items = Inventory.query.all()
+    if form.validate_on_submit():
+        item = Inventory(name = form.name.data, company_id = current_user.id)
+        db.session.add(item)
+        db.session.commit()
+        return redirect(url_for('inventory'))
+    return render_template('inventory.html',items=items, form=form)
 
 @app.route('/promanag')
 def promanag():

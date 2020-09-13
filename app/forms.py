@@ -26,3 +26,8 @@ class LoginForm(FlaskForm):
     name = StringField('Name', validators=[DataRequired()])
     password = PasswordField('password', validators=[DataRequired(), password_check])
     submit = SubmitField('Login')
+
+class InventoryForm(FlaskForm):
+    name = StringField('Name', validators=[DataRequired()])
+    submit = SubmitField('Add')
+
