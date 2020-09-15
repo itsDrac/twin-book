@@ -1,15 +1,19 @@
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
-from flask_login import LoginManager
-from flask_migrate import Migrate
+from .extinsions import db, migrate, login_manager
+from app.inventory import inv 
+from app.company import comp
 
-app = Flask(__name__)
+def create_app(config='config.py'):
+    app = Flask(__name__)
 
-app.config.from_pyfile('config.py')
+    app.config.from_pyfile(config)
 
-db = SQLAlchemy(app)
-migrate = Migrate(app, db)
-login_manager = LoginManager(app)
+    db.init_app(app)
+    migrate.init_app(app, db)
+    login_manager.init_app(app)
+    app.register_blueprint(inv, url_prefix='/inventory')
+    app.register_blueprint(comp)
 
+    return app
 
 from .routes import *

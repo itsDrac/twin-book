@@ -15,9 +15,9 @@
   <body>
     <div class="screen">
 		<div class="card col-sm-6 col-xl-4">
-			<form action="" method="post">
+			<form action="" method="POST">
                 {{ form.hidden_tag() }}
-				<h1>Login</h1>
+				<h1>Register</h1>
                 {{ form.name(placeholder = "Company Name") }}
                 {% if form.name.errors %}
                 <ul class="errors">
@@ -26,17 +26,29 @@
                     {% endfor %}
                 </ul>
                 {% endif %}
-                {{ form.password(placeholder = "Password") }}
-                {% if form.password.errors %}
+                
+                {{ form.number(placeholder = "Mobile Number") }}
+                {% if form.number.errors %}
                 <ul class="errors">
-                    {% for error in form.password.errors %}
-                        <li class="text-danger">{{ error }}</li>
+        	        {% for error in form.number.errors %}
+        		        <li class="text-danger">{{ error }}</li>
                     {% endfor %}
                 </ul>
                 {% endif %}
-	
+                
+                {{ form.email(placeholder = "E-mail") }}
+                {% if form.email.errors %}
+                <ul class="errors">
+        	        {% for error in form.email.errors %}
+        		        <li class="text-danger">{{ error }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+                
+                {{ form.password(placeholder = "Password") }}
+                
                 {{ form.submit(class = "btn btn-info") }}
-                <p>Register for a new company <a href="{{ url_for('register') }}">here</a></p>
+                <p>Already registered? login <a href="{{ url_for('comp.login') }}">here</a></p>
 			</form>
 		</div>
 	</div>

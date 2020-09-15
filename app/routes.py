@@ -1,46 +1,10 @@
 from flask import render_template, redirect, url_for
-from app import app, db
+from app.extinsions import db
 from app.forms import RegisterForm, LoginForm, InventoryForm
 from app.models import Company, Inventory
 from flask_login import login_user, current_user, logout_user, login_required
-
-@app.route('/')
-def home():
-    if not current_user.is_authenticated :
-        return redirect(url_for('login'))
-    return render_template('dashboard.html')
-
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    form = LoginForm()
-    if form.validate_on_submit():
-        company = Company.query.filter_by(name=form.name.data).first()
-        if company and company.password == form.password.data:
-            login_user(company, remember=False)
-            return redirect(url_for('home'))
-    return render_template('login.html', form=form)
-
-@app.route('/register', methods=['GET', 'POST'])
-def register():
-    form = RegisterForm()
-    if form.validate_on_submit():
-        c = Company(name = form.name.data, number = form.number.data, email = form.email.data, password = form.password.data)
-        db.session.add(c)
-        db.session.commit()
-        return redirect(url_for('login'))
-    return render_template('register.html', form=form)
-
-@app.route('/inventory', methods=['GET', 'POST'])
-@login_required
-def inventory():
-    form = InventoryForm()
-    items = Inventory.query.all()
-    if form.validate_on_submit():
-        item = Inventory(name = form.name.data, company_id = current_user.id)
-        db.session.add(item)
-        db.session.commit()
-        return redirect(url_for('inventory'))
-    return render_template('inventory.html',items=items, form=form)
+from app import create_app
+app=create_app()
 
 @app.route('/promanag')
 def promanag():
@@ -62,7 +26,7 @@ def vendadd():
 def vendrec():
     return render_template('vendRec.html')
 
-@app.route('/logout')
+#@app.route('/logout')
 def logout():
     logout_user()
     return redirect(url_for('login'))
