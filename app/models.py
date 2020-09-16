@@ -16,3 +16,15 @@ class Inventory(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     name = db.Column(db.String(20), unique = True, nullable = False)
     company_id = db.Column(db.Integer, db.ForeignKey('company.id'), nullable=False)
+
+class QuantityPerItem(db.Model):
+    inventory_id = db.Column(db.Integer, db.ForeignKey('inventory.id'), primary_key=True)
+    product_id = db.Column(db.Integer, db.ForeignKey('product.id'), primary_key=True)
+    quantity = db.Column(db.Integer, default = 1)
+
+class Product(db.Model):
+    id = db.Column(db.Integer, primary_key = True)
+    name = db.Column(db.String(20), unique = True, nullable = False)
+    company_id = db.Column(db.Integer, db.ForeignKey('company.id'), nullable=False)
+    stock = db.Column(db.Integer, default = 1)
+    items = db.relationship('QuantityPerItem', backref='product')

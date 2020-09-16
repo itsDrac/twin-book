@@ -6,11 +6,11 @@ from flask_login import login_user, current_user, logout_user, login_required
 from app import create_app
 app=create_app()
 
-@app.route('/promanag')
+#@app.route('/promanag')
 def promanag():
     return render_template('proManag.html') 
 
-@app.route('/proadd')
+#@app.route('/proadd')
 def proadd():
     return render_template('proAdd.html')
 

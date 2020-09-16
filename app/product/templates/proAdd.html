@@ -1,0 +1,34 @@
+{% from 'macros/forms.html' import render_field %}
+{% extends "layout.html" %}
+
+{% block body %}
+			<h1 class="m2 p2">Add Product</h1>
+			<form action="" method="post" class="container">
+            {{ form.hidden_tag() }}
+				<div class="row m-3">
+					<strong class="col-2">Name :&nbsp;</strong>
+                        {{ render_field(form.name, class='col-8') }}
+				</div>
+				<div class="row m-3">
+					<strong class="col-2">Stock :&nbsp;</strong>
+                    {{ render_field(form.stock ,class='col-8') }}
+				</div>
+                <div id="item-container">
+                <button type="button" id="add" class="btn btn-success col-1 mx-auto d-block"> Add </button>
+                {% for field in form.item_quantity %}
+                    <div id="item_quantity-{{ loop.index0 }}" class="subform my-1" data-index="{{ loop.index0 }}">
+                        <strong class="col-2">Item :&nbsp;</strong> {{ render_field(field.item_id) }}
+                        <strong class="col-2">Quantity &nbsp;</strong> {{ render_field(field.quantity) }}
+                        <a class="remove btn btn-danger" href="#">Remove</a>
+                    </div>
+                {% endfor %}
+                </div>
+                <a class="btn btn-danger col-2" href="{{ url_for('pro.home') }}">Cancel</a>
+                {{ render_field(form.submit, class='btn btn-success col-3') }}
+			</form>
+{% endblock body%}
+
+{% block script %}
+        {{ super() }}
+        <script src="{{ url_for('pro.static', filename='js/proadd.js') }}"></script>
+{% endblock %}
