@@ -1,3 +1,4 @@
+{% from 'macros/forms.html' import render_field %}
 <!doctype html>
 <html lang="en">
   <head>
@@ -18,36 +19,15 @@
 			<form action="" method="POST">
                 {{ form.hidden_tag() }}
 				<h1>Register</h1>
-                {{ form.name(placeholder = "Company Name") }}
-                {% if form.name.errors %}
-                <ul class="errors">
-                    {% for error in form.name.errors %}
-                        <li class="text-danger">{{ error }}</li>
-                    {% endfor %}
-                </ul>
-                {% endif %}
+                {{ render_field(form.name, placeholder = "Company Name") }}
                 
-                {{ form.number(placeholder = "Mobile Number") }}
-                {% if form.number.errors %}
-                <ul class="errors">
-        	        {% for error in form.number.errors %}
-        		        <li class="text-danger">{{ error }}</li>
-                    {% endfor %}
-                </ul>
-                {% endif %}
+                {{ render_field(form.number, placeholder = "Mobile Number") }}
                 
-                {{ form.email(placeholder = "E-mail") }}
-                {% if form.email.errors %}
-                <ul class="errors">
-        	        {% for error in form.email.errors %}
-        		        <li class="text-danger">{{ error }}</li>
-                    {% endfor %}
-                </ul>
-                {% endif %}
+                {{ render_field(form.email, placeholder = "E-mail") }}
                 
-                {{ form.password(placeholder = "Password") }}
+                {{ render_field(form.password, placeholder = "Password") }}
                 
-                {{ form.submit(class = "btn btn-info") }}
+                {{ render_field(form.submit, class = "btn btn-info") }}
                 <p>Already registered? login <a href="{{ url_for('comp.login') }}">here</a></p>
 			</form>
 		</div>

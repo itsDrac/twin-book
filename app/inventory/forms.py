@@ -6,3 +6,8 @@ class InventoryForm(FlaskForm):
     name = StringField('Name', validators=[DataRequired()])
     submit = SubmitField('Add')
 
+    def validate_name(self, name):
+        item = Inventory.query.first(name=name.data)
+        if item :
+            raise ValidationError('Item with this name already exist')
+

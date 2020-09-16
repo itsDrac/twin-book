@@ -1,3 +1,4 @@
+{% from 'macros/forms.html' import render_field %}
 {% extends 'layout.html' %}
 
 {% block body %}
@@ -17,11 +18,11 @@
 				<tbody>
                     {% for item in items %}
 					<tr>
-                    <td contenteditable="true">{{ loop.index }}</td>
-                    <td contenteditable="true">{{ item.name}}</td>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ item.name}}</td>
 					<td class="text-center">
-					<a href="" class="btn btn-success">Edit</a>
-					<a href="" class="btn btn-danger">Delete</a>
+                    <a href="{{ url_for('inv.edit', id=item.id) }}" class="btn btn-success">Edit</a>
+					<a href="{{ url_for('inv.delete', id=item.id) }}" class="btn btn-danger">Delete</a>
 					</td>
 					</tr>
                     {% endfor %}
@@ -97,14 +98,7 @@
 		<form action="" method="post">
         {{ form.hidden_tag() }}
 			<div class="modal-body">
-                {{ form.name(class = "col-12 lead font-weight-bold", placeholder = "Item Name") }}
-                {% if form.name.errors %}
-                <ul class="errors">
-                    {% for error in form.name.errors %}
-                        <li class="text-danger">{{ error }}</li>
-                    {% endfor %}
-                </ul>
-                {% endif %}
+                {{ render_field(form.name, class='col-12 lead font-weight-bold', placeholder='Item Name') }}
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

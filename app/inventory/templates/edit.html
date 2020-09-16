@@ -1,0 +1,16 @@
+{% from 'macros/forms.html' import render_field %}
+{% extends 'layout.html' %}
+
+{% block body %}
+    <h1 class="m2 p2">Edit Inventory Item</h1>
+			<form action="" method="post" class="container">
+				<div class="row m-3">
+					<strong class="col-2">Name :&nbsp;</strong>
+                    {{ render_field(form.name, class = 'col-8 mr-auto') }}
+				</div>
+                <div class="row m-3">
+                    <a class="btn btn-danger col-2 m-1" href="{{ url_for('inv.home') }}">Cancel</a>
+                    {{ render_field(form.submit, class = 'btn btn-success col-3 m-1', value = 'Save') }}
+                </div>
+            </form>
+{% endblock body %}
