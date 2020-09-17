@@ -22,7 +22,7 @@
                 <td contenteditable="true">{{ product.stock }}</td>
 				<td>10</td>
                 <td class="text-center">
-                  <a href="" class="btn btn-success">Edit</a>
+                <a href="{{ url_for('pro.edit', id=product.id) }}" class="btn btn-success">Edit</a>
                   <a href="{{ url_for('pro.delete', id=product.id) }}" class="btn btn-danger">Delete</a>
                 </td>
                 </tr>

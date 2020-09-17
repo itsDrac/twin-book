@@ -19,4 +19,3 @@ def create_app(config='config.py'):
 
     return app
 
-from .routes import *

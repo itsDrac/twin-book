@@ -1,0 +1,27 @@
+{% from 'macros/forms.html' import render_field %}
+{% extends "layout.html" %}
+
+{% block body %}
+			<h1 class="m2 p2">Edit Product</h1>
+			<form action="" method="post" class="container">
+            {{ form.hidden_tag() }}
+				<div class="row m-3">
+					<strong class="col-2">Name :&nbsp;</strong>
+                        {{ render_field(form.name, class='col-8') }}
+				</div>
+				<div class="row m-3">
+					<strong class="col-2">Stock :&nbsp;</strong>
+                    {{ render_field(form.stock ,class='col-8') }}
+				</div>
+                {% for item in items %}
+                    {{ item }}
+                    {{ item.inventory_id }} <strong>{{ item.quantity }}</strong>
+                {% endfor %}
+                <a class="btn btn-danger col-2" href="{{ url_for('pro.home') }}">Cancel</a>
+                {{ render_field(form.submit, class='btn btn-success col-3') }}
+                {% if form.item_quantity is iterable() %}True{% endif %}
+            </form>
+{% endblock body %}
+{% block script %}
+{{ super() }}
+{% endblock script%}

@@ -26,6 +26,17 @@ def add():
         return redirect(url_for('pro.home'))
     return render_template('proAdd.html', form=form)
 
+@pro.route('/edit/<int:id>')
+def edit(id):
+    form = ProductForm()
+    product = Product.query.get(id)
+    if form.validate_on_submit():
+        return form.data
+    form.name.data , form.stock.data = product.name, product.stock
+    items = product.items
+    form.item_quantity.quantity = [i.quantity for i in items]
+    return render_template('proedit.html', form=form, items=items)
+
 @pro.route('/delete/<int:id>')
 def delete(id):
     qpi = QuantityPerItem.query.filter_by(product_id = id).all()

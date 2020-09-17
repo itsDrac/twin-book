@@ -14,7 +14,7 @@ def home():
         item = Inventory(name = form.name.data, company_id = current_user.id)
         db.session.add(item)
         db.session.commit()
-        return redirect(url_for('inventory'))
+        return redirect(url_for('inv.home'))
     return render_template('inventory.html',items=items, form=form)
 
 @inv.route('/edit/<int:id>', methods = ['GET','POST'])
