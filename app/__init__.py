@@ -1,9 +1,10 @@
 from flask import Flask
 from .extinsions import db, migrate, login_manager
 from app.company import comp
-from app.inventory import inv 
+from app.inventory import inv
 from app.unit import unit
-from app.product import pro 
+from app.product import pro
+from app.purchase import pur
 
 def create_app(config='config.py'):
     app = Flask(__name__)
@@ -18,6 +19,7 @@ def create_app(config='config.py'):
     app.register_blueprint(inv, url_prefix='/inventory')
     app.register_blueprint(unit, url_prefix='/unit')
     app.register_blueprint(pro, url_prefix='/product')
+    app.register_blueprint(pur, url_prefix='/purchase')
 
     return app
 

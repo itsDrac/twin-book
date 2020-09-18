@@ -18,6 +18,8 @@ class Inventory(db.Model):
     company_id = db.Column(db.Integer, db.ForeignKey('company.id'), nullable=False)
 
 class QuantityPerItem(db.Model):
+    '''This table store quantity required by each inventory to make a product'''
+
     inventory_id = db.Column(db.Integer, db.ForeignKey('inventory.id'), primary_key=True)
     product_id = db.Column(db.Integer, db.ForeignKey('product.id'), primary_key=True)
     quantity = db.Column(db.Integer, default = 1)
@@ -34,16 +36,22 @@ class Unit(db.Model):
     name = db.Column(db.String(20), unique = True, nullable = False)
     company_id = db.Column(db.Integer, db.ForeignKey('company.id'), nullable=False)
 
+class QuantityPerPurchase(db.Model):
+    '''This table store quantity of each inventory in a purchase'''
+
+    inventory_id = db.Column(db.Integer, db.ForeignKey('inventory.id'), primary_key=True)
+    unit_id = db.Column(db.Integer, db.ForeignKey('unit.id'), primary_key=True)
+    purchase_id = db.Column(db.Integer, db.ForeignKey('purchase.id'), primary_key=True)
+    quantity = db.Column(db.Integer, default = 1)
+    price = db.Column(db.Float())
+
 class Purchase(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     party_name = db.Column(db.String(50))
     current_date = db.Column(db.Date)
     suplier_date = db.Column(db.Date)
-    invoice = db.Column(db.String(20), nullable=False)
-    inventory_id = db.Column(db.Integer, db.ForeignKey('inventory.id'), primary_key=True)
-    unit_id = db.Column(db.Integer, db.ForeignKey('unit.id'), primary_key=True)
-    price = db.Column(db.Float())
-    quantity = db.Column(db.Integer)
+    invoice = db.Column(db.String(20),unique = True, nullable=False)
+    items = db.relationship('QuantityPerPurchase', backref='purchase')
     company_id = db.Column(db.Integer, db.ForeignKey('company.id'), nullable=False)
 
 class StockManagment(db.Model):
@@ -51,6 +59,4 @@ class StockManagment(db.Model):
     inventory_id = db.Column(db.Integer, db.ForeignKey('inventory.id'), primary_key=True)
     quantity = db.Column(db.Integer)
     company_id = db.Column(db.Integer, db.ForeignKey('company.id'), nullable=False)
-
-
 
