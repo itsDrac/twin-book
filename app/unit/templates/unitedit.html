@@ -10,7 +10,7 @@
                     {{ render_field(form.name, class = 'col-8 mr-auto') }}
 				</div>
                 <div class="row m-3">
-                    <a class="btn btn-danger col-2 m-1" href="{{ url_for('inv.home') }}">Cancel</a>
+                    <a class="btn btn-danger col-2 m-1" href="{{ url_for('unit.home') }}">Cancel</a>
                     {{ render_field(form.submit, class = 'btn btn-success col-3 m-1', value = 'Save') }}
                 </div>
             </form>
@@ -18,3 +18,4 @@
 {% block script %}
 {{ super() }}
 {% endblock script %}
+

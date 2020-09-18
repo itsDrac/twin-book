@@ -1,0 +1,59 @@
+{% from 'macros/forms.html' import render_field %}
+{% extends 'layout.html' %}
+
+{% block body %}
+          <h1 class="m-2 p-2">Inventory List</h1>
+          <div class="container card">
+			<button type="button" class="ml-auto btn btn-success p-2 m-2" data-toggle="modal" data-target="#staticBackdrop">
+			Add Inventory
+			</button>
+              <table class="table table-striped table-sm table-bordered">
+				<thead class="thead-dark">
+					<tr>
+					<th>S. No.</th>
+					<th>Unit Name</th>
+					<th>Options</th>
+					</tr>
+				</thead>
+				<tbody>
+                    {% for unit in unites %}
+					<tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ unit.name}}</td>
+					<td class="text-center">
+                    <a href="{{ url_for('unit.edit', id=unit.id) }}" class="btn btn-success">Edit</a>
+					<a href="{{ url_for('unit.delete', id=unit.id) }}" class="btn btn-danger">Delete</a>
+					</td>
+					</tr>
+                    {% endfor %}
+				</tbody>
+                </table>
+			</div>
+	<!-- Modal -->
+	<div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+		<div class="modal-header">
+			<h5 class="modal-title" id="staticBackdropLabel">Add Item</h5>
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+		<form action="" method="post">
+        {{ form.hidden_tag() }}
+			<div class="modal-body">
+                {{ render_field(form.name, class='col-12 lead font-weight-bold', placeholder='Unit Name') }}
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                {{ form.submit(class="btn btn-success") }}
+			</div>
+		</form>
+		</div>
+	</div>
+	</div>
+{% endblock body %}
+{% block script %}
+{{ super() }}
+{% endblock script %}
+

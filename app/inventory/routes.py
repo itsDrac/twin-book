@@ -24,6 +24,7 @@ def edit(id):
     if form.validate_on_submit():
         item.name = form.name.data
         db.session.commit()
+        return redirect(url_for('inv.home'))
     form.name.data = item.name
     return render_template('edit.html', form = form)
 
