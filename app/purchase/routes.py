@@ -8,7 +8,7 @@ from flask_login import current_user, login_required
 @pur.route('/')
 def home():
     purchases = Purchase.query.filter_by(company_id = current_user.id).all()
-    return render_template('purchase.html')
+    return render_template('purchase.html', purchases = purchases)
 
 @pur.route('/add', methods=['GET','POST'])
 def add():

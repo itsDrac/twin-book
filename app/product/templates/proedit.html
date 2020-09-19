@@ -13,13 +13,19 @@
 					<strong class="col-2">Stock :&nbsp;</strong>
                     {{ render_field(form.stock ,class='col-8') }}
 				</div>
-                {% for item in items %}
-                    {{ item }}
-                    {{ item.inventory_id }} <strong>{{ item.quantity }}</strong>
+                <div id="item-container">
+                <button type="button" id="add" class="btn btn-success col-1 mx-auto d-block"> Add </button>
+                {% for field in form.item_quantity %}
+                    <div id="item_quantity-{{ loop.index0 }}" class="subform my-1" data-index="{{ loop.index0 }}">
+                        <strong class="col-2">Item :&nbsp;</strong> {{ render_field(field.item_id) }}
+                        <strong class="col-2">Quantity &nbsp;</strong> {{ render_field(field.quantity) }}
+                        <a class="remove btn btn-danger" href="#">Remove</a>
+                    </div>
                 {% endfor %}
+                </div>
                 <a class="btn btn-danger col-2" href="{{ url_for('pro.home') }}">Cancel</a>
                 {{ render_field(form.submit, class='btn btn-success col-3') }}
-                {% if form.item_quantity is iterable() %}True{% endif %}
+                <br><br>{{ form.item_quantity.data }}
             </form>
 {% endblock body %}
 {% block script %}
