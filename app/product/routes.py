@@ -4,6 +4,7 @@ from app.product.forms import ProductForm, ItemQuantityForm
 from app.models import Inventory, Product, QuantityPerItem
 from flask import render_template, redirect, url_for
 from flask_login import current_user, login_required
+from collections import namedtuple
 
 @pro.route('/')
 def home():
@@ -40,10 +41,17 @@ def edit(id):
     x = lambda id : (id, Inventory.query.get(id).name)
     #form.item_quantity.item_id.data = [i.inventory_id for i in product.items]
     #form.item_quantity.append_entry = [{'item_id': i.inventory_id, 'quantity': i.quantity} for i in product.items]
+    data = []
     for item in product.items:
-        data = {'item_id': x(item.inventory_id), 'quantity': item.quantity}
-        print(type(data['item_id']))
-        form.item_quantity.append_entry(data=data)
+        #data = [({'item_id': [item.inventory_id], 'quantity': [item.quantity]})]
+        group = namedtuple('Group', ['item_id', 'quantity'])
+        g = group(item.inventory_id, item.quantity)
+        data += g
+        print(data)
+        form.item_quantity(data = [{'item_id': item.inventory_id, 'quantity': item.quantity}])
+        print(type(form.item_quantity))
+        print(form.item_quantity.entries[0].item_id.data)
+        form.item_quantity(data=data)
     '''
     for item in product.items:
         iq = form.item_quantity()
