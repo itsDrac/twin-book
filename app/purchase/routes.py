@@ -34,4 +34,10 @@ def edit(id):
 
 @pur.route('/delete/<int:id>')
 def delete(id):
-    return 'Delete page'
+    qpi = QuantityPerPurchase.query.filter_by(purchase_id = id).all()
+    for q in qpi:
+        db.session.delete(q)
+    purchase = Purchase.query.get(id)
+    db.session.delete(purchase)
+    db.session.commit()
+    return redirect(url_for('pur.home'))
