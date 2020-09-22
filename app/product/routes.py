@@ -32,15 +32,14 @@ def edit(id):
     form = ProductForm()
     product = Product.query.get(id)
     for field in form.item_quantity:
-        print(type(field.item_id))
         field.item_id.choices = [(i.id, i.name) for i in Inventory.query.filter_by(company_id = current_user.id).order_by('name')]
-        field.quantity.default = 10
     if form.validate_on_submit():
         return form.data
     form.name.data , form.stock.data = product.name, product.stock
     x = lambda id : (id, Inventory.query.get(id).name)
     #form.item_quantity.item_id.data = [i.inventory_id for i in product.items]
     #form.item_quantity.append_entry = [{'item_id': i.inventory_id, 'quantity': i.quantity} for i in product.items]
+    '''
     data = []
     for item in product.items:
         #data = [({'item_id': [item.inventory_id], 'quantity': [item.quantity]})]
@@ -48,21 +47,21 @@ def edit(id):
         g = group(item.inventory_id, item.quantity)
         data += g
         print(data)
-        form.item_quantity(data = [{'item_id': item.inventory_id, 'quantity': item.quantity}])
+        #form.item_quantity(data = [{'item_id': item.inventory_id, 'quantity': item.quantity}])
         print(type(form.item_quantity))
         print(form.item_quantity.entries[0].item_id.data)
         form.item_quantity(data=data)
     '''
     for item in product.items:
-        iq = form.item_quantity()
+        iq = ItemQuantityForm()
         print(type(iq))
-        iq.item_id.default = item.inventory_id
+        iq.item_id.data = item.inventory_id
         print(type(iq.item_id))
-        iq.quantity.default = item.quantity
+        iq.quantity.data = item.quantity
         print(type(iq.quantity))
+        iq.item_id.choices = [(i.id, i.name) for i in Inventory.query.filter_by(company_id = current_user.id).order_by('name')]
 
         form.item_quantity.append_entry(iq)
-    '''
     return render_template('proedit.html', form=form)
 
 @pro.route('/delete/<int:id>')

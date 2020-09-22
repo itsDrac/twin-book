@@ -5,6 +5,7 @@ from app.inventory import inv
 from app.unit import unit
 from app.product import pro
 from app.purchase import pur
+from app.vendor import vend
 
 def create_app(config='config.py'):
     app = Flask(__name__)
@@ -20,6 +21,7 @@ def create_app(config='config.py'):
     app.register_blueprint(unit, url_prefix='/unit')
     app.register_blueprint(pro, url_prefix='/product')
     app.register_blueprint(pur, url_prefix='/purchase')
+    app.register_blueprint(vend, url_prefix='/vendor')
 
     return app
 
