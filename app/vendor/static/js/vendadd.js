@@ -57,7 +57,7 @@
       // Add elements
       var $newForm = $lastForm.clone();
 
-      $newForm.attr('id', 'item_quantity-'+ newIndex);
+      $newForm.attr('id', 'products-'+ newIndex);
       $newForm.data('index', newIndex);
 
       ['select','input'].forEach( (field) => {
